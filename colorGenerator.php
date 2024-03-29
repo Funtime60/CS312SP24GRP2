@@ -34,13 +34,22 @@
 			<tbody>
 				<?php
 					for($iI = 0; $iI < $iColor; $iI++) {
-						echo '<tr id=' . $iI . '><td class="table1L">test</td><td class="table1R">test</td></tr>';
+						echo '<tr id=table1Row' . $iI . '>' . "\n\t\t\t\t\t\t\t" . '<td class="table1L">test</td>' . "\n\t\t\t\t\t\t\t" . '<td class="table1R">test</td>' . "\n\t\t\t\t\t\t" . '</tr>';
 					}
 				?>		
 			</tbody>
 		</table>
 		<table>
-			
+			<tbody>
+				<?php
+					for($iI = 0; $iI < $iRowColumn; $iI++) {
+						echo '<tr id=table2Row' . $iI . '>';
+						for($iJ = 0; $iJ < $iRowColumn; $iJ++) {
+						}
+						echo '</tr>
+					}
+				?>		
+			</tbody>	
 		</table>
 	</body>
 </html>
