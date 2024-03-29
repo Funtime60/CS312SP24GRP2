@@ -7,8 +7,8 @@
 		<title>Color Generator</title>
 
 		<?php
-			$iRowColumn = $_POST["RowCol"] ?? 1;
-			$iColor     = $_POST["Color"]  ?? 1;
+			$iRowColumn = $_GET["RowCol"] ?? 1;
+			$iColor     = $_GET["Color"]  ?? 1;
 		?>
 	</head>
 	<body>
@@ -16,6 +16,15 @@
 			include 'navbar.html';
 		?>
 		<h1>Color Generator</h1>
+		<table>
+			<tbody>
+				<?php
+					for($iI = 0; $iI < $iColor; $iI++) {
+						echo '<tr id=' . $iI . '><td class="table1L"></td><td class="table1R"></td></tr>'
+					}
+				?>		
+			</tbody>
+		</table>
 		<table>
 			
 		</table>
