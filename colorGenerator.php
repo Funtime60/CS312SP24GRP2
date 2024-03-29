@@ -15,7 +15,8 @@
 				width: 80%;
 			}
 			#table1 {
-				backgound-color: blue;
+				background-color: blue;
+				color: red;
 			}
 		</style>
 
