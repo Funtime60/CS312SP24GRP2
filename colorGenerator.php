@@ -6,6 +6,19 @@
 		<meta name="description" content="Color Generator Page for T3chSharkz29 LLC">
 		<title>Color Generator</title>
 
+		<link rel="stylesheet" href="colorGenerator.css">
+		<style>
+			.table1L {
+				width-max: 20%;
+			}
+			.table2L {
+				width: 80%;
+			}
+			#table1 {
+				backgound-color: blue;
+			}
+		</style>
+
 		<?php
 			$iRowColumn = $_GET["RowCol"] ?? 1;
 			$iColor     = $_GET["Color"]  ?? 1;
@@ -16,7 +29,7 @@
 			include 'navbar.html';
 		?>
 		<h1>Color Generator</h1>
-		<table>
+		<table id="table1">
 			<tbody>
 				<?php
 					for($iI = 0; $iI < $iColor; $iI++) {
