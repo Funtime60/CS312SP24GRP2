@@ -46,7 +46,7 @@
 						echo '<tr id=table2Row' . $iI . '>';
 						for($iJ = 0; $iJ < $iRowColumn; $iJ++) {
 						}
-						echo '</tr>'
+						echo '</tr>';
 					}
 				?>		
 			</tbody>	
