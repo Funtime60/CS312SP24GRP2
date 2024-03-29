@@ -34,7 +34,7 @@
 			<tbody>
 				<?php
 					for($iI = 0; $iI < $iColor; $iI++) {
-						echo '<tr id=table1Row' . $iI . '>' . "\n\t\t\t\t\t\t\t" . '<td class="table1L">test</td>' . "\n\t\t\t\t\t\t\t" . '<td class="table1R">test</td>' . "\n\t\t\t\t\t\t" . '</tr>';
+						echo "<tr id=\"table1Row\"" . $iI . ">\n\t\t\t\t\t\t\t<td class=\"table1L\">test</td>\n\t\t\t\t\t\t\t<td class=\"table1R\">test</td>\n\t\t\t\t\t\t</tr>";
 					}
 				?>		
 			</tbody>
