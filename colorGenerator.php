@@ -5,11 +5,19 @@
 		<meta name="keywords" content="HTML, CSS, JavaScript,">
 		<meta name="description" content="Color Generator Page for T3chSharkz29 LLC">
 		<title>Color Generator</title>
+
+		<?php
+			$iRowColumn = $_POST["RowCol"] ?? 1;
+			$iColor     = $_POST["Color"]  ?? 1;
+		?>
 	</head>
 	<body>
 		<?php
 			include 'navbar.html';
 		?>
-		<h1> T3chSharkz29 LLC</h1>
+		<h1>Color Generator</h1>
+		<table>
+			
+		</table>
 	</body>
 </html>
