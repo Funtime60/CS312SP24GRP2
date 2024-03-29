@@ -20,7 +20,7 @@
 			<tbody>
 				<?php
 					for($iI = 0; $iI < $iColor; $iI++) {
-						echo '<tr id=' . $iI . '><td class="table1L"></td><td class="table1R"></td></tr>'
+						echo '<tr id=' . $iI . '><td class="table1L"></td><td class="table1R"></td></tr>';
 					}
 				?>		
 			</tbody>
