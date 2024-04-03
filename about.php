@@ -29,8 +29,16 @@
 			    </p>
 			</div>
 			<div class="person">
+			<div class="person">
 			    <h2> Jake Parra</h2>
-			    <!-- INSERT BIO/PHOTO HERE    -->
+				<img src="./Photos/JakeParraProfilePic.JPG" alt="Jake Parra posing for headshot photo">
+				<p>
+					My name is Jake Parra. I am a senior in computer science at CSU. I am from Lakewood, CO.
+					I currently work in the Quality Control Department at Valimenta Labs located in Wellington,CO.
+					I am working toward gaining an internship in the area of web development, system security, or 
+					software engineering. In my free time, I enjoy going to the gym, spending time with friends, and playing video games.
+				</p>
+			</div>
 			</div>
 			<div class="person">
 			    <h2> Daniel Peaslee</h2>
