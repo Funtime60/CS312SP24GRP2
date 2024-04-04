@@ -1,0 +1,33 @@
+:root {
+    --Table1Width: 20em;
+    --Table1Ratio: 20%;
+    --Table2Size: 2.5em;
+}
+.table1CellL {
+    width: var(--Table1Ratio);
+}
+.table1CellR {
+    width: calc(100% - --Table1Ratio);
+}
+#table1 {
+    width: var(--Table1Width);
+}
+#table1 Select {
+    border: none;
+    background-color: inherit;
+}
+table td, table th {
+    border: black 1px solid;
+}
+#table2 td, #table2 th {
+    /* Just set them all, some of them affect overflow. Didn't bother to check which */
+    min-height: var(--Table2Size);
+    min-width:  var(--Table2Size);
+    height: var(--Table2Size);
+    width:  var(--Table2Size);
+    max-height: var(--Table2Size);
+    max-width:  var(--Table2Size);
+}
+#table2 {
+    text-align: center;
+}
