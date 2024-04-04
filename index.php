@@ -2,7 +2,7 @@
 <html>
 
 <?php
-include 'navbar.html';
+	include 'navbar.php';
 ?>
 
 <head>

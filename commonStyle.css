@@ -1,0 +1,13 @@
+@import url("colorPalette.css");
+
+#pageTitle {
+	text-align: center;
+	background-color: var(--dark_orange);
+	color: var(--dark_green);
+	padding: 0.25em;
+}
+
+body {
+	background-color: var(--light_green);
+	margin: 0;
+}
