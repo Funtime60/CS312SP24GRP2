@@ -12,8 +12,8 @@
 			/* Variables are camel case, and prefixed by lowercase types. $i is integer, $as is string array, $b is boolean, etc */
 			/* Read GET parameters and define globals here so we have them everywhere */
 			/* Could switch to POST later if that's what is needed, just used GET since it's easy to set without a form */
-			$iRowColumn = $_GET["RowCol"] ?? 1;
-			$iColor		= $_GET["Color"]  ?? 1;
+			$iRowColumn = $_POST["RowCol"] ?? 1;
+			$iColor		= $_POST["Color"]  ?? 1;
 
 			/* Colors are sorted in a rough gradient + gray/black based on the assumption that the color name to hex will follow the HTML standards */
 			$asColorList = array("red", "brown", "orange", "yellow", "green", "teal", "blue", "purple", "gray", "black");
