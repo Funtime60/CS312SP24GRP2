@@ -47,6 +47,15 @@
 					I am a computer science major. I love everything to do with computers and aim to work with them in the future in just about any capacity. In my free time I love to play PC games and tinker with obsolete and/or uncommon PC technology.
 				</p>
 			</div>
+					<div class="person">
+			<h2>Gabriel Bertasius</h2>
+			<img src="./Photos/gabrielbertasiusabout.jpg" alt="Portrait photo of Gabriel Bertasius">
+			<p>
+				I'm Gabriel Bertasius and I'm a CS student focusing on Artificial Intelligence and Machine Learning. I enjoy being a student, but I can't wait to work with real world systems.
+				I started programming with C++ and OpenGL in my early teens and have been intrigued by AI systems in video games. I hope to gain a better understanding of how AI and ML systems work so I can apply them to agents inside virtual worlds.
+				When I'm away from my computer I like to get a good workout at the gym and in the summers I spend alot of time biking.
+			</p>
+		</div>
 		</div>
 	</body>
 </html>
