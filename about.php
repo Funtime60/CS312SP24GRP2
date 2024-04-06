@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 
 <html>
+	<?php
+		$sTitle= "About US!";
+	?>
 	<head>
-	    <meta name="author" content="Gabriel Bertasius, Issac Curtis, Jake Parra, Daniel Peaslee">
-	    <meta name="keywords" content="HTML, CSS, JavaScript,">
-	    <meta name="description" content="Home Page for T3chSharkz29 LLC">
-	    <title> T3chSharkz29 LLC | About Us</title>
-
-		<link rel="stylesheet" href="commonStyle.css">
+		<?php
+			include 'headContents.php';
+		?>
 		<link rel="stylesheet" href="aboutCSS.css">
 	</head>
 
@@ -15,7 +15,7 @@
 		<?php
 			include 'navbar.php';
 		?>
-	    <h1 id="pageTitle"> About US! </h1>
+	    <h1 id="pageTitle"><?php echo $sTitle ?></h1>
 		<div id="peopleGrid">
 			<div class="person">
 			    <h2> Gabriel Bertasius </h2>

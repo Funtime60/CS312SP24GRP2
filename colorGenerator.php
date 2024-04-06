@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
+	<?php
+		$sTitle = "Color Generator";
+	?>
 	<head>
-		<meta name="author" content="Gabriel Bertasius, Issac Curtis, Jake Parra, Daniel Peaslee">
-		<meta name="keywords" content="HTML, CSS, JavaScript,">
-		<meta name="description" content="Color Generator Page for T3chSharkz29 LLC">
-		<title>Color Generator</title>
-
+		<?php
+			include 'headContents.php';
+		?>
 		<link rel="stylesheet" href="colorGenerator.css">
 
 		<?php
@@ -21,7 +22,7 @@
 	</head>
 	<body>
 		<?php
-			include 'navbar.html';
+			include 'navbar.php';
 		?>
 		<div>
 			<h1>Color Generator</h1>

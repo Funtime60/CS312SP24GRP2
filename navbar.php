@@ -1,14 +1,5 @@
-<!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="navbar.css">
-
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-
-<body>
+	<!-- Does this violate HTML? Yes. Does it work? yes. Do I care? no. -->
+	<link rel="stylesheet" type="text/css" href="navbar.css">
     <nav>
         <div class="navbar">
             <div class="logo"><a href="index.php">T3chSharkz29</a></div>
@@ -18,5 +9,3 @@
             </ul>
         </div>
     </nav>
-
-</html>
