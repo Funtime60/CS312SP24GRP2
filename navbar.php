@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link rel="stylesheet" type="text/css" href="navbar.css">';
+<link rel="stylesheet" type="text/css" href="navbar.css">
 
 <html lang="en" dir="ltr">
 
