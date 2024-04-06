@@ -1,0 +1,71 @@
+@import url("colorPalette.css");
+
+:root {
+	--nav-height: 3.125rem;
+}
+nav{
+ position: sticky;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: var(--nav-height);
+ background: var(--light_orange);
+ box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+nav + * {
+	margin-top: 0;
+}
+nav ul, nav ol {
+	padding-inline-start: 0;
+}
+nav .navbar{
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ height: 100%;
+ max-width: 90%;
+ background: var(--light_orange);
+ margin: auto;
+  font-family: 'Poppins', sans-serif;
+}
+nav .navbar .logo a{
+  font-weight: 600;
+}
+nav .navbar .menu{
+  display: flex;
+}
+.navbar .menu li{
+  list-style: none;
+  margin: 0 1rem;
+}
+.navbar a{
+  color: #fff;
+  font-size: 1.75em;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+#Home{
+  background: #fff;
+}
+#About{
+  background: #f2f2f2;
+}
+
+
+nav .navbar ul, nav .navbar ol {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+nav .navbar li, nav .navbar .logo {
+	margin: 0 !important;
+	padding: 0 1em;
+	height: var(--nav-height);
+	line-height: var(--nav-height);
+}
+nav .navbar .logo {
+	padding: 0 0.5em;
+}
+nav .navbar li:hover:has(a), nav .navbar .logo:hover:has(a) {
+	backdrop-filter: brightness(0.75);
+}
