@@ -58,7 +58,7 @@ nav .navbar ul, nav .navbar ol {
 	margin-bottom: 0;
 }
 nav .navbar li, nav .navbar .logo {
-	margin: 0 !important;
+	margin: 0;
 	padding: 0 1em;
 	height: var(--nav-height);
 	line-height: var(--nav-height);
