@@ -18,7 +18,7 @@
 			/* Variables are camel case, and prefixed by lowercase types. $i is integer, $as is string array, $b is boolean, etc */
 			/* Read GET parameters and define globals here so we have them everywhere */
 			/* Could switch to POST later if that's what is needed, just used GET since it's easy to set without a form */
-			$iRowColumn = $_POST["RowCol"] ?? 1;
+			$iRowColumn	= $_POST["RowCol"] ?? 1;
 			$iColor		= $_POST["Color"]  ?? 1;
 
 			/* Colors are sorted in a rough gradient + gray/black based on the assumption that the color name to hex will follow the HTML standards */
@@ -26,6 +26,7 @@
 		?>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="colorGenerator.js"></script>
+		<script src="validation.js"></script>
 		<style>
 			<?php
 				if(!isset($_POST["printMode"])) {
@@ -37,7 +38,7 @@
 				backdrop-filter: grayscale(1);
 				--ContentWidth: min(50vh, 50vw);
 			}
-			nav .navbar div.brand {
+			nav .navbar div.logo {
 				margin: auto;
 			}
 			nav .navbar ul.menu {
@@ -51,6 +52,19 @@
 		?>
 		<h1 id="pageTitle">Color Generator</h1>
 		<form id="tableContainer" method="POST">
+			<?php
+				if(isset($_POST["printMode"])) {
+					echo "<!--";
+				}
+			?>
+			<label for="RowCol">Number of colors between 1 and 10: </label>
+			<input type="number" class="" id="Color" name="Color" min="1" max="10" value="<?php echo $iColor ?>" required>
+			<br>
+			<label for="RowCol">Number of rows and columns between 1 and 26: </label>
+			<input type="number" class="" id="RowCol" name="RowCol" min="1" max="26" value="<?php echo $iRowColumn ?>" required> 
+			<br>
+			<input type="submit" value="Submit">
+			<div class="tableSpacer"></div><!---->
 			<div id="table1Container">
 				<div id="table1ErrorMsg" class="errorMsg" style="display: none;">Error: Setting Error Message Failed!</div>
 				<table id="table1">
@@ -100,8 +114,6 @@
 				</table>
 			</div>
 			<div class="tableSpacer"></div>
-			<input type="hidden" name="Color" value="<?php echo $iColor ?>">
-			<input type="hidden" name="RowCol" value="<?php echo $iRowColumn ?>">
 			<input id="printMode" type="<?php echo (isset($_POST['printMode']) ? 'hidden' : 'submit')?>" name="printMode" value="Printable View">
 			<div class="tableSpacer"></div>
 		</form>
