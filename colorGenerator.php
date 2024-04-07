@@ -37,7 +37,7 @@
 				backdrop-filter: grayscale(1);
 				--ContentWidth: min(50vh, 50vw);
 			}
-			nav .navbar div.logo {
+			nav .navbar div.brand {
 				margin: auto;
 			}
 			nav .navbar ul.menu {
