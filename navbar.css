@@ -57,15 +57,23 @@ nav .navbar ul, nav .navbar ol {
 	margin-top: 0;
 	margin-bottom: 0;
 }
-nav .navbar li, nav .navbar .logo {
+nav .navbar li, nav .navbar .logo, nav .navbar .name {
 	margin: 0;
 	padding: 0 1em;
 	height: var(--nav-height);
 	line-height: var(--nav-height);
 }
 nav .navbar .logo {
-	padding: 0 0.5em;
+	padding: 0;
 }
-nav .navbar li:hover:has(a), nav .navbar .logo:hover:has(a) {
+nav .navbar li:hover:has(a), nav .navbar .brand:hover:has(a) {
 	backdrop-filter: brightness(0.75);
+}
+.logo img {
+    height: var(--nav-height);
+}
+
+nav .navbar .brand {
+	display: flex;
+	height: var(--nav-height);
 }
