@@ -6,7 +6,7 @@
     --Table1Ratio: 20%;
     --Table2Size: calc(var(--ContentWidth) / 27);
 }
-td, #printMode {
+td, input[type="submit"], input[type="number"] {
 	background-color: var(--light_orange);
 }
 th {
@@ -27,7 +27,7 @@ th {
     background-color: inherit;
 	min-width: 100%;
 }
-table td, table th, #printMode {
+table td, table th, input[type="submit"], input[type="number"] {
     border: black 1px solid;
 }
 #table2 td, #table2 th {
@@ -58,4 +58,7 @@ select:disabled {
 	/* for Chrome */
 	-webkit-appearance: none;
 	color: black;
+}
+label, input[type="number"] {
+    margin: 0.25em 0;
 }
