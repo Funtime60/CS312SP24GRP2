@@ -6,6 +6,7 @@
             <ul class="menu">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
+                <li><a href="colorGenerator.php">Color Generator</a></li>
             </ul>
         </div>
     </nav>

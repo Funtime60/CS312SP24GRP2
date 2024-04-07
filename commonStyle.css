@@ -11,3 +11,16 @@ body {
 	background-color: var(--light_green);
 	margin: 0;
 }
+
+.homePageText {
+	width: 50%;
+	float:left;
+	padding: 0 10px;
+	font-size: 1.15em;
+}
+
+.photoright {
+	width: 50%;
+	float: right;
+	padding: 0 10px;
+}
