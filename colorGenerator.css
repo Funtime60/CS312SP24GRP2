@@ -1,7 +1,16 @@
+@import url("colorPalette.css");
+
 :root {
-    --Table1Width: 20em;
+	--ContentWidth: 80vw;
+    --Table1Width: var(--ContentWidth);
     --Table1Ratio: 20%;
-    --Table2Size: 2.5em;
+    --Table2Size: calc(var(--ContentWidth) / 27);
+}
+td, #printMode {
+	background-color: var(--light_orange);
+}
+th {
+	background-color: var(--dark_orange);
 }
 .table1CellL {
     width: var(--Table1Ratio);
@@ -11,12 +20,14 @@
 }
 #table1 {
     width: var(--Table1Width);
+	margin: auto;
 }
 #table1 Select {
     border: none;
     background-color: inherit;
+	min-width: 100%;
 }
-table td, table th {
+table td, table th, #printMode {
     border: black 1px solid;
 }
 #table2 td, #table2 th {
@@ -28,6 +39,23 @@ table td, table th {
     max-height: var(--Table2Size);
     max-width:  var(--Table2Size);
 }
+table {
+	border-collapse: collapse;
+}
 #table2 {
     text-align: center;
+	margin: auto;
+}
+.tableSpacer {
+	height: 1rem;
+}
+form {
+	text-align: center;
+}
+select:disabled {
+	/* for Firefox */
+	-moz-appearance: none;
+	/* for Chrome */
+	-webkit-appearance: none;
+	color: black;
 }

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<?php
+		header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+		header("Cache-Control: post-check=0, pre-check=0", false);
+		header("Pragma: no-cache");
+	?>
+	<?php
 		$sTitle = "Color Generator";
 	?>
 	<head>
@@ -19,15 +24,33 @@
 			/* Colors are sorted in a rough gradient + gray/black based on the assumption that the color name to hex will follow the HTML standards */
 			$asColorList = array("red", "brown", "orange", "yellow", "green", "teal", "blue", "purple", "gray", "black");
 		?>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="colorGenerator.js"></script>
+		<style>
+			<?php
+				if(!isset($_POST["printMode"])) {
+					echo "/*";
+				}
+			?>
+			:root {
+				filter: grayscale(1);
+				backdrop-filter: grayscale(1);
+				--ContentWidth: min(50vh, 50vw);
+			}
+			nav .navbar div.logo {
+				margin: auto;
+			}
+			nav .navbar ul.menu {
+				display: none;
+			}/**/
+		</style>
 	</head>
 	<body>
 		<?php
 			include 'navbar.php';
 		?>
-		<div>
-			<h1>Color Generator</h1>
-		</div>
-		<div id="tableContainer">
+		<h1 id="pageTitle">Color Generator</h1>
+		<form id="tableContainer" method="POST">
 			<div id="table1Container">
 				<div id="table1ErrorMsg" class="errorMsg" style="display: none;">Error: Setting Error Message Failed!</div>
 				<table id="table1">
@@ -37,9 +60,9 @@
 							for($iI = 0; $iI < $iColor; $iI++) {
 								echo ($iI != 0 ? "\n\t\t\t\t\t\t" : "") . "<tr id=\"table1Row" . $iI . "\" class=\"table1Row\">";
 								echo "\n\t\t\t\t\t\t\t<td id=\"table1Row" . $iI . "ColL\"class=\"table1CellL\">";
-								echo "\n\t\t\t\t\t\t\t\t<select name=\"table1Row" . $iI . "Select\" id=\"table1Row" . $iI . "Select\">";
+								echo "\n\t\t\t\t\t\t\t\t<select" . (isset($_POST["printMode"]) ? " disabled " : " ") . "name=\"table1Row" . $iI . "Select\" id=\"table1Row" . $iI . "Select\">";
 								for($iJ = 0; $iJ < count($asColorList); $iJ++) {
-									echo "\n\t\t\t\t\t\t\t\t\t<option" . ($iJ == $iI ?  ' selected="selected" ' : ' ') . "value=\"$asColorList[$iJ]\">$asColorList[$iJ]</option>";
+									echo "\n\t\t\t\t\t\t\t\t\t<option" . ((!isset($_POST["table1Row" . $iI . "Select"]) && $iJ == $iI) || (isset($_POST["table1Row" . $iI . "Select"]) && $_POST["table1Row" . $iI . "Select"] == $asColorList[$iJ]) ?	' selected="selected" ' : ' ') . "value=\"$asColorList[$iJ]\">$asColorList[$iJ]</option>";
 								}
 								echo "\n\t\t\t\t\t\t\t\t</select>";
 								echo "\n\t\t\t\t\t\t\t</td>";
@@ -51,6 +74,7 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="tableSpacer"></div>
 			<div id="table2Container">
 				<div id="table2ErrorMsg" class="errorMsg" style="display: none;">Error: Setting Error Message Failed!</div>
 				<table id="table2">
@@ -75,6 +99,11 @@
 					</tbody>
 				</table>
 			</div>
-		</div>
+			<div class="tableSpacer"></div>
+			<input type="hidden" name="Color" value="<?php echo $iColor ?>">
+			<input type="hidden" name="RowCol" value="<?php echo $iRowColumn ?>">
+			<input id="printMode" type="<?php echo (isset($_POST['printMode']) ? 'hidden' : 'submit')?>" name="printMode" value="Printable View">
+			<div class="tableSpacer"></div>
+		</form>
 	</body>
 </html>
