@@ -61,7 +61,7 @@
 			<input type="number" class="" id="Color" name="Color" min="1" max="10" value="<?php echo $iColor ?>" required>
 			<br>
 			<label for="RowCol">Number of rows and columns between 1 and 26: </label>
-			<input type="number" class="" id="RowCol" name="RowCol" min="1" max="26" value="<?php echo $iRowColumn ?>" required> 
+			<input type="number" class="" id="RowCol" name="RowCol" min="1" max="26" value="<?php echo $iRowColumn ?>" required>
 			<br>
 			<input type="submit" value="Submit">
 			<div class="tableSpacer"></div><!---->
@@ -79,6 +79,7 @@
 									echo "\n\t\t\t\t\t\t\t\t\t<option" . ((!isset($_POST["table1Row" . $iI . "Select"]) && $iJ == $iI) || (isset($_POST["table1Row" . $iI . "Select"]) && $_POST["table1Row" . $iI . "Select"] == $asColorList[$iJ]) ?	' selected="selected" ' : ' ') . "value=\"$asColorList[$iJ]\">$asColorList[$iJ]</option>";
 								}
 								echo "\n\t\t\t\t\t\t\t\t</select>";
+								echo "\n\t\t\t\t\t\t\t\t<input" . (((isset($_POST["colorSelectRadio"])? $_POST["colorSelectRadio"] : "index0") == "index" . $iI)?' checked="checked" ' : ' ') . (isset($_POST["printMode"]) ? " disabled " : " ") . "type=\"radio\" name=\"colorSelectRadio\" id=\"table1Row" . $iI . "Radio\" value=\"index" . $iI . "\">";
 								echo "\n\t\t\t\t\t\t\t</td>";
 								echo "\n\t\t\t\t\t\t\t<td id=\"table1Row" . $iI . "ColR\"class=\"table1CellR\"></td>";
 								echo "\n\t\t\t\t\t\t</tr>";

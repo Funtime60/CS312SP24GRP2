@@ -25,7 +25,8 @@ th {
 #table1 Select {
     border: none;
     background-color: inherit;
-	min-width: 100%;
+	min-width: calc(100% - 1.75rem);
+    height: 1.25rem;
 }
 table td, table th, input[type="submit"], input[type="number"] {
     border: black 1px solid;
@@ -52,7 +53,7 @@ table {
 form {
 	text-align: center;
 }
-select:disabled {
+select:disabled, input[type="radio"]:disabled {
 	/* for Firefox */
 	-moz-appearance: none;
 	/* for Chrome */
