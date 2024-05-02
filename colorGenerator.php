@@ -45,6 +45,52 @@
 				display: none;
 			}/**/
 		</style>
+		<style id="colorVar">
+			:root {
+				--index0val: var(--light_orange);
+				--index1val: var(--light_orange);
+				--index2val: var(--light_orange);
+				--index3val: var(--light_orange);
+				--index4val: var(--light_orange);
+				--index5val: var(--light_orange);
+				--index6val: var(--light_orange);
+				--index7val: var(--light_orange);
+				--index8val: var(--light_orange);
+				--index9val: var(--light_orange);
+			}
+		</style>
+		<style id="colorSet">
+			.table2Cell.index0 {
+				background-color: var(--index0val);
+			}
+			.table2Cell.index1 {
+				background-color: var(--index1val);
+			}
+			.table2Cell.index2 {
+				background-color: var(--index2val);
+			}
+			.table2Cell.index3 {
+				background-color: var(--index3val);
+			}
+			.table2Cell.index4 {
+				background-color: var(--index4val);
+			}
+			.table2Cell.index5 {
+				background-color: var(--index5val);
+			}
+			.table2Cell.index6 {
+				background-color: var(--index6val);
+			}
+			.table2Cell.index7 {
+				background-color: var(--index7val);
+			}
+			.table2Cell.index8 {
+				background-color: var(--index8val);
+			}
+			.table2Cell.index9 {
+				background-color: var(--index9val);
+			}
+		</style>
 	</head>
 	<body>
 		<?php
@@ -79,7 +125,7 @@
 									echo "\n\t\t\t\t\t\t\t\t\t<option" . ((!isset($_POST["table1Row" . $iI . "Select"]) && $iJ == $iI) || (isset($_POST["table1Row" . $iI . "Select"]) && $_POST["table1Row" . $iI . "Select"] == $asColorList[$iJ]) ?	' selected="selected" ' : ' ') . "value=\"$asColorList[$iJ]\">$asColorList[$iJ]</option>";
 								}
 								echo "\n\t\t\t\t\t\t\t\t</select>";
-								echo "\n\t\t\t\t\t\t\t\t<input" . (((isset($_POST["colorSelectRadio"])? $_POST["colorSelectRadio"] : "index0") == "index" . $iI)?' checked="checked" ' : ' ') . (isset($_POST["printMode"]) ? " disabled " : " ") . "type=\"radio\" name=\"colorSelectRadio\" id=\"table1Row" . $iI . "Radio\" value=\"index" . $iI . "\">";
+								echo "\n\t\t\t\t\t\t\t\t<input" . (((isset($_POST["colorSelectRadio"])? $_POST["colorSelectRadio"] : "index0") == "index" . $iI)?' checked="checked" ' : ' ') . (isset($_POST["printMode"]) ? " disabled " : " ") . "class=\"table1Radio\" type=\"radio\" name=\"colorSelectRadio\" id=\"table1Row" . $iI . "Radio\" value=\"index" . $iI . "\">";
 								echo "\n\t\t\t\t\t\t\t</td>";
 								echo "\n\t\t\t\t\t\t\t<td id=\"table1Row" . $iI . "ColR\"class=\"table1CellR\"></td>";
 								echo "\n\t\t\t\t\t\t</tr>";
