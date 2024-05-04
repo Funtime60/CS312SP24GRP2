@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS colors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    hex_value VARCHAR(7) NOT NULL UNIQUE
+);
+
+
+INSERT IGNORE INTO colors (name, hex_value) VALUES  ('Black', '#000000’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Red’, ‘#FF0000’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Orange’, #FFA500’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Yellow’, #FFFF00’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Green’, #00FF00’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Blue’, #0000FF’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Purple’,#800080’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Grey’, ‘#808080’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Brown’, ‘#964B00’);
+INSERT IGNORE INTO colors (name, hex_value) VALUES  (‘Teal’, ‘#008080’);
+
+
+//You do not have to do the whole insert command each time, you can have each entry separated by a comma, but I kept running into issues when doing multiple at a time so I did them individually
