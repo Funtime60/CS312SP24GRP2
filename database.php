@@ -90,14 +90,6 @@ class SQL
     {
         return $this->conn;
     }
-
-    public function isError($result)
-    {
-        if ($result === false) {
-            return ("Unable to execute query: " . $this->conn->connect_error);
-        }
-        return false;
-    }
 }
 // encode array as json string
 function buildJSON(array $arr): string
