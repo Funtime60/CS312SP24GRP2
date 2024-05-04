@@ -25,7 +25,11 @@
 			$asColorList = array("red", "brown", "orange", "yellow", "green", "teal", "blue", "purple", "gray", "black");
 		?>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<script src="colorGenerator.js"></script>
+		<?php
+			if(!isset($_POST["printMode"])) {
+				echo "<script src=\"colorGenerator.js\"></script>\n";
+			}
+		?>
 		<script src="validation.js"></script>
 		<style>
 			<?php
@@ -33,17 +37,37 @@
 					echo "/*";
 				}
 			?>
-			:root {
-				filter: grayscale(1);
-				backdrop-filter: grayscale(1);
-				--ContentWidth: min(50vh, 50vw);
+:root {
+				filter: grayscale(100%);
+				--ContentWidth: min(60vh, 60vw);
+			}
+			input[type="radio"]:disabled {
+				display: none;
+			}
+			th {
+				font-size: 0.75em
 			}
 			nav .navbar div.brand {
 				margin: auto;
 			}
 			nav .navbar ul.menu {
 				display: none;
-			}/**/
+			}
+			@media print {
+				body {
+					-webkit-filter: grayscale(100%);
+					-moz-filter: grayscale(100%);
+					-ms-filter: grayscale(100%);
+					filter: grayscale(100%);
+					min-height: 100vh;
+				}
+			}
+			/**/
+		</style>
+		<style id="tableSiz">
+			:root {
+				--Table2Size: calc(var(--ContentWidth) / <?php echo ($iRowColumn + 1)?>);
+			}
 		</style>
 		<style id="colorVar">
 			:root {
@@ -60,34 +84,34 @@
 			}
 		</style>
 		<style id="colorSet">
-			.table2Cell.index0 {
+			#table2 td.table2Cell.index0 {
 				background-color: var(--index0val);
 			}
-			.table2Cell.index1 {
+			#table2 td.table2Cell.index1 {
 				background-color: var(--index1val);
 			}
-			.table2Cell.index2 {
+			#table2 td.table2Cell.index2 {
 				background-color: var(--index2val);
 			}
-			.table2Cell.index3 {
+			#table2 td.table2Cell.index3 {
 				background-color: var(--index3val);
 			}
-			.table2Cell.index4 {
+			#table2 td.table2Cell.index4 {
 				background-color: var(--index4val);
 			}
-			.table2Cell.index5 {
+			#table2 td.table2Cell.index5 {
 				background-color: var(--index5val);
 			}
-			.table2Cell.index6 {
+			#table2 td.table2Cell.index6 {
 				background-color: var(--index6val);
 			}
-			.table2Cell.index7 {
+			#table2 td.table2Cell.index7 {
 				background-color: var(--index7val);
 			}
-			.table2Cell.index8 {
+			#table2 td.table2Cell.index8 {
 				background-color: var(--index8val);
 			}
-			.table2Cell.index9 {
+			#table2 td.table2Cell.index9 {
 				background-color: var(--index9val);
 			}
 		</style>
@@ -127,7 +151,9 @@
 								echo "\n\t\t\t\t\t\t\t\t</select>";
 								echo "\n\t\t\t\t\t\t\t\t<input" . (((isset($_POST["colorSelectRadio"])? $_POST["colorSelectRadio"] : "index0") == "index" . $iI)?' checked="checked" ' : ' ') . (isset($_POST["printMode"]) ? " disabled " : " ") . "class=\"table1Radio\" type=\"radio\" name=\"colorSelectRadio\" id=\"table1Row" . $iI . "Radio\" value=\"index" . $iI . "\">";
 								echo "\n\t\t\t\t\t\t\t</td>";
-								echo "\n\t\t\t\t\t\t\t<td id=\"table1Row" . $iI . "ColR\"class=\"table1CellR\"></td>";
+								echo "\n\t\t\t\t\t\t\t<td id=\"table1Row" . $iI . "ColR\"class=\"table1CellR\">";
+								echo "\n\t\t\t\t\t\t\t\t<input type=\"text\" readonly=\"readonly\" name=\"table1Row" . $iI . "Output\" id=\"table1Row" . $iI . "Output\" value=\"" . ($_POST["table1Row" . $iI . "Output"] ?? "") . "\"></input>";
+								echo "\n\t\t\t\t\t\t\t</td>";
 								echo "\n\t\t\t\t\t\t</tr>";
 							}
 							echo "\n";

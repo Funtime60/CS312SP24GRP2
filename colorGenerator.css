@@ -12,6 +12,9 @@ td, input[type="submit"], input[type="number"] {
 th {
 	background-color: var(--dark_orange);
 }
+#table2 td {
+	background-color: white;
+}
 .table1CellL {
     width: var(--Table1Ratio);
 }
@@ -29,7 +32,7 @@ th {
     height: 1.25rem;
 }
 table td, table th, input[type="submit"], input[type="number"] {
-    border: black 1px solid;
+    border: black 1.5px solid;
 }
 #table2 td, #table2 th {
     /* Just set them all, some of them affect overflow. Didn't bother to check which */
@@ -62,4 +65,14 @@ select:disabled, input[type="radio"]:disabled {
 }
 label, input[type="number"] {
     margin: 0.25em 0;
+}
+
+#table1 td > input[type="text"] {
+	padding: 0;
+	border: none;
+	background-color: inherit;
+	color: inherit;
+	width: 100%;
+	text-align: center;
+   pointer-events: none;
 }

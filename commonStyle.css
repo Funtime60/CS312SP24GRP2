@@ -7,6 +7,10 @@
 	padding: 0.25em;
 }
 
+body > * {
+	background-color: var(--light_green);
+}
+
 body {
 	background-color: var(--light_green);
 	margin: 0;
