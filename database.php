@@ -16,7 +16,7 @@ $table = "colors";
 function decodeJSON(): mixed
 {
     // return $_GET;
-    return json_decode(file_get_contents('php://input'));
+    return json_decode(file_get_contents('php://input'), true);
     // return json_decode(var_dump($_POST));
 }
 function buildTable()
@@ -45,6 +45,12 @@ function q_retrieveColor($color): string
     return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
 }
 
+function q_modifyColor($color, $hex): string
+{
+    global $table;
+    return "UPDATE `colors` SET `hex_value` = '$hex' WHERE `name` = '$color';";
+}
+
 function q_deleteColor($color): string
 {
     global $table;
@@ -69,7 +75,8 @@ class SQL
         }
         return $this->conn;
     }
-    public function &getRef(){
+    public function &getRef()
+    {
         return $this->conn;
     }
 
@@ -89,7 +96,10 @@ function buildJSON(array $arr): string
 //Create array for json response
 function buildError(string $error): array
 {
-    return array("Error" => $error);
+    return array(
+        "status" => "error",
+        "message" => $error
+    );
 }
 
 // Something unexpected happened. Send message and quit early. 
@@ -99,106 +109,70 @@ function terminate(string $msg)
     exit();
 }
 
-$response = array();
-// Check the request method
-$method = $_SERVER['REQUEST_METHOD'];
-// $dump = json_decode("{ \"addName\": \"New color name\", \"addColor\": \"#000000\" }",true);
-// echo var_dump($dump);
-// 
-
-$sqlClass = new SQL($servername, $username, $password, $database);
-$mysqli =& $sqlClass->getRef();
-// $mysqli->query("");
-//Connection created
-function maincode()
+function maincode(): array
 {
     global $mysqli;
     $dump = decodeJSON();
-    $dump = "{\"addName\":\"black\",\"addColor\":\"#000000\", \"type\":\"submit\"}";
-    $dump = json_decode($dump, true);
-    // $keys = array_keys($dump);
-    // echo var_dump($keys);
-    echo var_dump($dump);
-    /** @var string $name */
-    $name = $dump['addName'];
-    /** @var string $color */
-    $color = $dump['addColor'] ;
-    try{
-    switch ($dump['type']) {
-        case 'submit':
-            $mysqli->query(q_insertValues( $name, $color ));
-            // echo q_insertValues( $name, $color );
-            break;
-        case 'edit':
-            break;
-        case 'delete':
-            break;
-        default:
-            break;
-    }
-}catch(Exception $e){
-    echo buildJSON(buildError($e->getMessage()));
-}
-    $dataExists = false; // Replace this with your actual logic to check if data exists
+    // $dump = "{\"edtName\":\"black\",\"edtColor\":\"#fffaf0\", \"type\":\"edit\"}";
+    // $dump = json_decode($dump, true);
+    try {
+        switch ($dump['type']) {
+            case 'submit':
+                $name = $dump['addName'];
+                $color = $dump['addColor'];
+                $result = $mysqli->query(q_insertValues($name, $color));
+                // echo q_insertValues( $name, $color );
+                break;
+            case 'edit':
+                $name = $dump['edtName'];
+                $color = $dump['edtColor'];
+                $result = $mysqli->query(q_modifyColor($name, $color));
+                break;
+            case 'delete':
+                $name = $dump['delName'];
+                $color = $dump['delColor'];
+                $result = $mysqli->query(q_deleteColor($name, $color));
+                break;
+            default:
+                throw new Exception("Invalid request!");
+        }
 
-    if ($dataExists) {
-        // Data already exists, send error response
-        $response['status'] = 'error';
-        $response['message'] = 'Data already exists!';
-    } else {
-        // Data doesn't exist, add it (This should be replaced with your actual logic to add data)
-        // For demonstration, let's just store it in an array
-        $newData = array(
-            'name' => "mockname",
-            'color' => "#000000"
-        );
-        // Your code to add data to your storage mechanism goes here
-
-        // Send success response
         $response['status'] = 'success';
         $response['message'] = 'Data added successfully';
-        $response['data'] = ($dump);
         $response['jsonerror'] = json_last_error();
+    } catch (Exception $e) {
+        throw new Exception($e->getMessage());
     }
-}
-switch ($method) {
-    case 'POST':
-        mainCode();
-        break;
-
-    case 'GET':
-        // Expected json looks like the $dump string
-        // Json_decode will convert to array
-        // This array can be accessed using the expected keys
-        // $dump = checkRequest();
-        // $dump = "{\"addName\":\"black\",\"addColor\":\"#000000\"}";
-        // $dump = ""
-        // $dump = json_decode($dump);
-        // echo var_dump($dump);
-        // $mysqli->  
-
-        // $dummyData = array(
-        //     array('name' => 'Red', 'color' => '#FF0000'),
-        //     array('name' => 'Green', 'color' => '#00FF00'),
-        //     array('name' => 'Blue', 'color' => '#0000FF')
-        // );
-
-        // // Send success response with retrieved data
-        // $response['status'] = 'success';
-        // $response['data'] = $dummyData;
-        mainCode();
-        break;
-
-    default:
-        // Invalid request method
-        $response['status'] = 'error';
-        $response['message'] = 'Invalid request method';
-        break;
+    return $response;
 }
 
-// Set response headers
-header('Content-Type: application/json');
+try {
 
-// Output JSON response
+    $response = array();
+    // Check the request method
+    $method = $_SERVER['REQUEST_METHOD'];
+    // $method = 'POST';
+    header('Content-Type: application/json');
+
+    $sqlClass = new SQL($servername, $username, $password, $database);
+    $mysqli = &$sqlClass->getRef();
+    //Connection created
+
+    switch ($method) {
+        case 'POST':
+            $response = mainCode();
+            break;
+
+        case 'GET':
+        default:
+            // Invalid request method
+            $response['status'] = 'error';
+            $response['message'] = 'Invalid request method';
+            break;
+    }
 echo json_encode($response);
+} catch (Exception $e) {
+    echo buildJSON(buildError($e->getMessage()));
+}
+// Output JSON response
 // echo json_encode(array("method" => $method, "data" => var_dump($dump)));

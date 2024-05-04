@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
     $("#addColorForm").on("submit", function (event) {
         event.preventDefault();
@@ -22,24 +21,26 @@ function submitData(ctx, type) {
     $.each(ctx.serializeArray(), function (_, kv) {
         data[kv.name] = kv.value;
     });
-    data['type']= type; 
+    data['type'] = type;
+    
+    var jsonstring = JSON.stringify(data);
+    console.log(typeof data);
     console.log(data);
+    console.log(typeof jsonstring);
+    console.log(jsonstring);
     $.ajax({
         type: "POST",
         url: 'database.php',
-        data: JSON.stringify(data),
+        data: jsonstring, 
         contentType: 'application/json',
         dataType: 'json',
         success: function (retData) {
             console.log("success");
             console.log(retData);
         },
-        failure: function (xhr, status, err) {
+        error: function (xhr, status, err) {
             console.log("fail");
             console.log(err);
         },
-        always: function () {
-            console.log("sent...");
-        }
     });
 }
