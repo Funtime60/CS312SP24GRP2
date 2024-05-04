@@ -1,18 +1,95 @@
 <?php
 // phpinfo();
+$servername = "localhost";
+$username = "php_user";
+$password = "supersecret";
+$database = "milestone";
+$table = "colors";
+
+
+// https://www.php.net/manual/en/mysqlinfo.api.choosing.php
+
+// I think it may be best to use prepared style statements
+// Both apis seem very similar. Ill go with mysqli.
+
 
 $response = array();
 // Check the request method
 $method = $_SERVER['REQUEST_METHOD'];
-$dump = json_decode(file_get_contents('php://input'), true);
 // $dump = json_decode("{ \"addName\": \"New color name\", \"addColor\": \"#000000\" }",true);
 // echo var_dump($dump);
+
+function checkRequest(): array
+{
+    return json_decode(file_get_contents('php://input'), true);
+}
+function buildTable()
+{
+    global $table;
+    $sql = "CREATE TABLE IF NOT EXISTS `$table`("
+        . "    id INT AUTO_INCREMENT PRIMARY KEY,"
+        . "    name VARCHAR(255) NOT NULL UNIQUE,"
+        . "    hex_value VARCHAR(7) NOT NULL UNIQUE"
+        . ");";
+}
+function q_insertValues($color, $hex)
+{
+    global $table;
+    $sql = "INSERT INTO `$table` (`name`, `hex_value`) VALUES (\'$color\', \'$hex\');";
+}
+function q_retrieveTable(): string
+{
+    global $table;
+    $sql = "SELECT `name`, `hex_value` FROM `$table`;";
+}
+
+function q_retrieveColor($color): string
+{
+    global $table;
+    $sql = "SELECT `name` , `hex_value` from `$table` where `name` = \'$color\';";
+    return $sql;
+}
+
+function q_deleteColor($color): string
+{
+    global $table;
+    $sql = "SET @rowCount = (SELECT COUNT(*) FROM `$table`);
+            IF @rowCount > 2 THEN
+                DELETE FROM `$table` WHERE `name` = \'$color\';
+            ELSE
+                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = \'Error: Cannot delete remaining colors! Must have atleast two.\';
+            END IF;";
+    return $sql;
+}
+
+
+class SQL
+{
+    private $conn;
+    public function __construct($server, $user, $pass, $database)
+    {
+        $this->conn = new mysqli($server, $user, $pass, $database);
+        if ($this->conn->connect_error) {
+            die("Database Connection Failed: " . $this->conn->connect_error);
+            return false;
+        }
+        return true;
+    }
+
+    public function checkError($result)
+    {
+        if ($result === false) {
+            die("Unable to execute query: " . $this->conn->connect_error);
+        }
+    }
+}
+
 switch ($method) {
     case 'POST':
-        $dump = json_decode(file_get_contents('php://input'), true);
-        // Handle POST request (Adding data)
+        $dump = checkRequest();         // Handle POST request (Adding data)
+
         $keys = array_keys($dump);
-        // Check if data already exists (This logic should be implemented based on your storage mechanism)
+
         $dataExists = false; // Replace this with your actual logic to check if data exists
 
         if ($dataExists) {
@@ -62,6 +139,4 @@ header('Content-Type: application/json');
 
 // Output JSON response
 // echo json_encode($response);
-echo json_encode(array("method"=>$method, "data"=>$dump));
-
-?>
+echo json_encode(array("method" => $method, "data" => $dump));
