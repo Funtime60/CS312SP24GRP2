@@ -10,42 +10,7 @@ $sTitle = "API Interface Page";
 	?>
 	<link rel="stylesheet" href="APIPage.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-		$(document).ready(function() {
-			$("#addColorForm").on("submit", function(event) {
-				event.preventDefault();
-				submitData($(this));
-			});
-		});
-
-		function submitData(ctx) {
-			// console.log($("#addColorForm"));
-			// var dat = JSON.stringify(ctx.serializeArray());
-			var data = {};
-
-			$.each(ctx.serializeArray(), function(_, kv) {
-				data[kv.name] = kv.value;
-			});
-
-			console.log(data);
-			$.ajax({
-				type: "POST",
-				url: 'database.php',
-				data: data,
-				contentType: 'application/json',
-				dataType: 'json',
-				success: function(retData) {
-					console.log(retData);
-				},
-				failure: function(xhr, status, err) {
-					console.log(err);
-				},
-				always: function() {
-					console.log("sent...");
-				}
-			});
-		}
-	</script>
+	<script src= "rest.js"></script>
 </head>
 
 <body>
