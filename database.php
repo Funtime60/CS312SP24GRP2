@@ -39,12 +39,23 @@ function q_retrieveTable(): string
     return "SELECT `name`, `hex_value` FROM `$table`;";
 }
 
-function q_retrieveColor($color): string
+function q_retrieveColor($color, $hex): string
 {
     global $table;
-    return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
+    if (empty($color) && !empty($hex)) {
+        return "SELECT `name` , `hex_value` from `$table` where `hex_value` = '$hex';";
+    }
+    else if (!empty($color) && empty($hex)) {
+        return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
+    }
+    // return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
 }
 
+function q_retrieveHex($color): string
+{
+    global $table;
+    return "SELECT `hex_value` from `$table` where `name` = '$color';";
+}
 function q_modifyColor($color, $hex): string
 {
     global $table;
@@ -112,9 +123,12 @@ function terminate(string $msg)
 function maincode(): array
 {
     global $mysqli;
-    $dump = decodeJSON();
+    // $dump = decodeJSON();
     // $dump = "{\"edtName\":\"black\",\"edtColor\":\"#fffaf0\", \"type\":\"edit\"}";
     // $dump = json_decode($dump, true);
+    $dump['type'] = 'getColor';
+    // $dump['name'] = 'red';
+    $dump['color'] = '#ffaadd';
     try {
         switch ($dump['type']) {
             case 'submit':
@@ -132,6 +146,26 @@ function maincode(): array
                 $name = $dump['delName'];
                 $color = $dump['delColor'];
                 $result = $mysqli->query(q_deleteColor($name, $color));
+                break;
+            case 'getTable':
+                $result = $mysqli->query(q_retrieveTable());
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+                $result->free();
+                $response['data'] = $rows; // = json_encode($rows);
+                break;
+            case 'getColor':
+                $name = "";
+                $color = "";
+                if(isset($dump['name'])){
+                    $name = $dump['name'];                    
+                }
+                else if(isset($dump['color'])){
+                    $color = $dump['color'];
+                }
+                $result = $mysqli->query(q_retrieveColor($name, $color));
+                $rows = $result->fetch_all(MYSQLI_ASSOC);
+                $result->free();
+                $response['data'] = $rows; // = json_encode($rows);
                 break;
             default:
                 throw new Exception("Invalid request!");
@@ -151,7 +185,7 @@ try {
     $response = array();
     // Check the request method
     $method = $_SERVER['REQUEST_METHOD'];
-    // $method = 'POST';
+    $method = 'POST';
     header('Content-Type: application/json');
 
     $sqlClass = new SQL($servername, $username, $password, $database);
@@ -170,7 +204,7 @@ try {
             $response['message'] = 'Invalid request method';
             break;
     }
-echo json_encode($response);
+    echo json_encode($response);
 } catch (Exception $e) {
     echo buildJSON(buildError($e->getMessage()));
 }

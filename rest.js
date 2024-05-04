@@ -44,3 +44,30 @@ function submitData(ctx, type) {
         },
     });
 }
+
+function requestColor(colorObj){
+    submitColor(colorObj, 'getColor');
+}
+
+function submitColor(colorObj, type) {
+    var jsonstring = JSON.stringify(colorObj);
+    console.log(typeof colorObj);
+    console.log(colorObj);
+    console.log(typeof jsonstring);
+    console.log(jsonstring);
+    $.ajax({
+        type: "POST",
+        url: 'database.php',
+        data: jsonstring, 
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (retData) {
+            console.log("success");
+            console.log(retData);
+        },
+        error: function (xhr, status, err) {
+            console.log("fail");
+            console.log(err);
+        },
+    });
+}
