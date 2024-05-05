@@ -84,6 +84,14 @@ function selectPopHandler() {
 }
 
 
+function getColor(colorObj) {
+    // [{"name":"colorname",
+    // "color": "#000000"}]
+    colorObj['type'] = APIRequest.GET_COLOR;
+    let response = APICall(colorObj);
+    return response;
+}
+
 function deleteSelector(deleteColor) {
     let colorObj = deleteColor;
     console.log(colorObj);
@@ -95,15 +103,9 @@ function deleteSelector(deleteColor) {
 
 }
 function editSelector(updatedColor) {
-    // if (Object.keys(updatedColor).length != 2) {
-    //     return;
-    // }
-    // let colorObj = renameKeys(updatedColor, colorObjectKeys);
     let colorObj = updatedColor;
     console.log(colorObj);
-    let found = localDB.find(
-        o => o[CObjKeys.name].toLowerCase() === colorObj[CObjKeys.name].toLowerCase()
-    );
+    let found = arrayFindKeyValue(localDB, CObjKeys.name, colorObj[CObjKeys.name]);
     if (found) {
         found[CObjKeys.color] = colorObj[CObjKeys.color];
     }
@@ -195,13 +197,6 @@ function deleteColor(ctx) {
             console.log("API call failed: ", error);
             setError(error);
         });
-}
-function getColor(colorObj) {
-    // [{"name":"colorname",
-    // "color": "#000000"}]
-    colorObj['type'] = APIRequest.GET_COLOR;
-    let response = APICall(colorObj);
-    return response;
 }
 
 function setError(strError) {
