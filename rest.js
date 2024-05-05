@@ -99,6 +99,7 @@ function deleteSelector(deleteColor) {
         o => o[CObjKeys.name].toLowerCase() !== colorObj[CObjKeys.name].toLowerCase()
     );
     console.log(localDB);
+    localDB=found;
     selectPopHandler();
 
 }

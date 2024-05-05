@@ -11,7 +11,7 @@ $table = "colors";
 // Both apis seem very similar. Ill go with mysqli.
 
 // Pull json from php's input buffer
-function decodeJSON(): mixed {
+function decodeJSON(){
     // return $_GET;
     return json_decode(file_get_contents('php://input'), true);
     // return json_decode(var_dump($_POST));
