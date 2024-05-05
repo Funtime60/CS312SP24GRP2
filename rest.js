@@ -1,4 +1,4 @@
-let localDB = [{ "name": "Black", "color": "#000000" }];
+let localDB = [{ "name": "White", "color": "#ffffff" }];
 const colorObjectKeys = ['name', 'color'];
 const CObjKeys = Object.freeze({
     name: 'name',
@@ -15,7 +15,6 @@ const APIRequest = Object.freeze({
 });
 
 $(document).ready(function () {
-
     // console.log(Object.keys(localDB[0]));
     getTable();
     // selectPopHandler();
@@ -32,9 +31,10 @@ $(document).ready(function () {
     });
     $("#edtList").on("input", function (event) {
         let val = $(this).val();
-        let found = localDB.find(
-            o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
-        );
+        // let found = localDB.find(
+        //     o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
+        // );
+        let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
         if (found) {
             $("#edtSelector").val(found[CObjKeys.color]);
         }
@@ -42,19 +42,30 @@ $(document).ready(function () {
     $("#delColorForm").on("submit", function (event) {
         event.preventDefault();
         deleteColor($(this));
-        getTable();
     });
     $("#delList").on("input", function (event) {
         let val = $(this).val();
-        let found = localDB.find(
-            o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
-        );
+        // let found = localDB.find(
+        //     o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
+        // );
+        let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
         if (found) {
             $("#delSelector").val(found[CObjKeys.color]);
         }
     });
 });
-
+function arrayFindKeyValue(arr, key, val) {
+    return arr.find(
+        o => o[key].toLowerCase() === val.toLowerCase()
+    )
+}
+function initializeColorInput() {
+    let val = $("#edtList").val();
+    let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
+    $("#edtSelector").val(found[CObjKeys.color]);
+    // $("#addSelector").val(localDB[0].color);
+    $("#delSelector").val(found[CObjKeys.color]);
+}
 function selectPopHandler() {
     const selects = $("select");
     selects.empty();
@@ -114,7 +125,9 @@ function addColor(ctx) {
             if (response.status === "error") {
                 setError(response.message);
             } else {
-                updateSelector(oldobj);
+                updateSelector(oldObj);
+                clearError();
+                $("#addName").val("");
             }
         })
         .catch(function (error) {
@@ -123,16 +136,16 @@ function addColor(ctx) {
         });
 }
 function updateSelector(colorObj) {
-    localDB.push(renameKeys(colorObj, colorObjectKeys));
+    localDB.push(colorObj);
     selectPopHandler();
 }
 function editColor(ctx) {
     let serialObject = serialize(ctx);
-    if (serialObject['edtName'].length === 0){
+    if (serialObject['edtName'].length === 0) {
         setError("Please confirm by typing in color.");
         return
     }
-    else if(serialObject['edtName'].toLowerCase() !== serialObject['edtList'].toLowerCase()) {
+    else if (serialObject['edtName'].toLowerCase() !== serialObject['edtList'].toLowerCase()) {
         setError("Selected color and typed text do not match!");
         return;
     }
@@ -147,6 +160,7 @@ function editColor(ctx) {
                 setError(response.message);
             } else {
                 editSelector(oldObj);
+                clearError();
             }
         })
         .catch(function (error) {
@@ -173,6 +187,8 @@ function deleteColor(ctx) {
                 setError(response.message);
             } else {
                 deleteSelector(oldObj);
+                clearError();
+                $("#delName").val("");
             }
         })
         .catch(function (error) {
@@ -192,19 +208,26 @@ function setError(strError) {
     $(".ErrorRow > td").text(strError);
 }
 
+function clearError() {
+    setError("");
+}
+
 function getTable() {
     let requestObj = { 'type': APIRequest.GET_TABLE };
     APICall(requestObj)
         .then(function (response) {
-            localDB = response.data;
-            selectPopHandler();
             if (response.status === "error") {
                 setError(response.message);
+            }
+            else {
+                localDB = response.data;
+                selectPopHandler();
+                initializeColorInput();
             }
         })
         .catch(function (error) {
             // console.log("API call failed: ", error);
-            setError(err);
+            setError(error);
         });
 }
 
