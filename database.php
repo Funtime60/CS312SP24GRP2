@@ -1,6 +1,8 @@
 <?php
 // phpinfo();
 include ("db_cred.php");
+
+$servername = "localhost";  // Dont touch!
 $table = "colors";
 
 // https://www.php.net/manual/en/mysqlinfo.api.choosing.php
