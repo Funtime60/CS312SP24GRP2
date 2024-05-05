@@ -21,7 +21,7 @@ function q_buildTable() {
     $sql = "CREATE TABLE IF NOT EXISTS `$table`("
         . "    id INT AUTO_INCREMENT PRIMARY KEY,"
         . "    name VARCHAR(42) NOT NULL UNIQUE,"
-        . "    hex_value VARCHAR(7) NOT NULL UNIQUE"
+        . "    color VARCHAR(7) NOT NULL UNIQUE"
         . ");";
     return $sql;
 }
@@ -56,43 +56,43 @@ function q_insertDefaultColors() {
 
 function q_insertValues($color, $hex) {
     global $table;
-    return "INSERT INTO `$table` (`name`, `hex_value`) VALUES ('$color', '$hex');";
+    return "INSERT INTO `$table` (`name`, `color`) VALUES ('$color', '$hex');";
 }
 function q_retrieveTable(): string {
     global $table;
-    return "SELECT `name`, `hex_value` FROM `$table`;";
+    return "SELECT `name`, `color` FROM `$table`;";
 }
 
 function q_retrieveColor($color, $hex): string {
     global $table;
     if (empty($color) && !empty($hex)) {
-        return "SELECT `name` , `hex_value` from `$table` where `hex_value` = '$hex';";
+        return "SELECT `name` , `color` from `$table` where `color` = '$hex';";
     } else if (!empty($color) && empty($hex)) {
-        return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
+        return "SELECT `name` , `color` from `$table` where `name` = '$color';";
     }
-    // return "SELECT `name` , `hex_value` from `$table` where `name` = '$color';";
+    // return "SELECT `name` , `color` from `$table` where `name` = '$color';";
 }
 
 function q_retrieveHex($color): string {
     global $table;
-    return "SELECT `hex_value` from `$table` where `name` = '$color';";
+    return "SELECT `color` from `$table` where `name` = '$color';";
 }
 function q_modifyColor($color, $hex): string {
     global $table;
-    return "UPDATE `colors` SET `hex_value` = '$hex' WHERE `name` = '$color';";
+    return "UPDATE `colors` SET `color` = '$hex' WHERE `name` = '$color';";
 }
 
 function q_deleteColor($color): string {
     global $table;
-    $sql = "SET @rowCount = (SELECT COUNT(*) FROM `$table`);
-            IF @rowCount > 2 THEN
-                DELETE FROM `$table` WHERE `name` = '$color';
-            ELSE
-                SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Error: Cannot delete remaining colors! Must have atleast two.';
-            END IF;";
+    $sql = "DELETE FROM `$table` WHERE `name` = '$color';";
     return $sql;
 }
 
+function q_countRows() {
+    global $table;
+    $sql = "(SELECT COUNT(*) AS row_count FROM `$table`);";
+    return $sql;
+}
 
 class SQL {
     public $conn;
@@ -146,21 +146,35 @@ function maincode(): array {
     $response = array();
     try {
         switch ($dump['type']) {
-            case 'submit':
+            case 'add':
                 $name = $dump['addName'];
                 $color = $dump['addColor'];
                 $result = $mysqli->query(q_insertValues($name, $color));
+                $response['message'] = 'Data added successfully';
                 // echo q_insertValues( $name, $color );
                 break;
             case 'edit':
                 $name = $dump['edtName'];
                 $color = $dump['edtColor'];
                 $result = $mysqli->query(q_modifyColor($name, $color));
+                $response['message'] = 'Update Successful';
                 break;
             case 'delete':
                 $name = $dump['delName'];
-                $color = $dump['delColor'];
-                $result = $mysqli->query(q_deleteColor($name));
+                // $color = $dump['delColor'];
+                $result = $mysqli->query(q_countRows());
+                $row = $result->fetch_assoc();
+                if ($row['row_count'] > 2) {
+                    $result = $mysqli->query(q_deleteColor($name));
+                    if (!$result) {
+                        throw new Exception("Error deleting row: " . $mysqli->error);
+                    } else {
+                        $response['message'] = 'Color removed successfully';
+                    }
+                } else {
+                    throw new Exception("Cannot delete anymore values. Must have atleast 2!");
+                }
+
                 break;
             case 'getTable':
                 if (!$sqlClass->checkTableExistence($table)) {
@@ -174,6 +188,7 @@ function maincode(): array {
                 $result = $mysqli->query(q_retrieveTable());
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
                 $result->free();
+                $response['message'] = 'Table retrieved';
                 $response['data'] = $rows; // = json_encode($rows);
                 break;
             case 'getColor':
@@ -187,6 +202,7 @@ function maincode(): array {
                 $result = $mysqli->query(q_retrieveColor($name, $color));
                 $rows = $result->fetch_all(MYSQLI_ASSOC);
                 $result->free();
+                $response['message'] = 'Color retrieved';
                 $response['data'] = $rows; // = json_encode($rows);
                 break;
             default:
@@ -194,7 +210,6 @@ function maincode(): array {
         }
 
         $response['status'] = 'success';
-        $response['message'] = 'Data added successfully';
         $response['jsonerror'] = json_last_error();
     } catch (Exception $e) {
         throw new Exception($e->getMessage());

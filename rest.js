@@ -1,28 +1,38 @@
 let localDB = [{ "name": "Black", "color": "#000000" }];
 
+const APIRequest = Object.freeze({
+    SUBMIT: 'add',
+    EDIT: 'edit',
+    DELETE: 'delete',
+    GET_TABLE: 'getTable',
+    GET_COLOR: 'getColor'
+});
+
 $(document).ready(function () {
-    // retrieveTable():w
-    selectPopHandler();
+
+    getTable();
+    // selectPopHandler();
+    // refreshClientColors(retTable['data']);
     $("#addColorForm").on("submit", function (event) {
         event.preventDefault();
-        submitColor($(this), 'submit');
+        addColor($(this));
+        getTable();
     });
     $("#edtColorForm").on("submit", function (event) {
         event.preventDefault();
-        editColor($(this), 'edit');
-
+        editColor($(this));
+        getTable();
     });
     $("#delColorForm").on("submit", function (event) {
         event.preventDefault();
-        deleteColor($(this), 'delete');
+        deleteColor($(this));
+        getTable();
     });
 });
 
-function retrieveTable() {
-    return APICall({}, 'getTable');
-}
 function selectPopHandler() {
     const selects = $("select");
+    selects.empty();
     const nameArr = localDB.map((x) => x.name);
     console.log(nameArr);
     selects.each(function (k, v) {
@@ -36,27 +46,45 @@ function selectPopHandler() {
         nameArr.forEach((x, i, a) => options.add(new Option(x, x), i));
     });
 }
-function submitColor(ctx, type) {
+function addColor(ctx) {
     let serialObject = serialize(ctx);
-    serialObject['type'] = type;
+    serialObject['type'] = APIRequest.SUBMIT;
     let response = APICall(serialObject);
-}
-function editColor(ctx, type) {
-    let serialObject = serialize(ctx);
-    serialObject['type'] = type;
-    let response = APICall(serialObject);
-}
-function deleteColor(ctx, type) {
-    let serialObject = serialize(ctx);
-    serialObject['type'] = type;
-    let response = APICall(serialObject);
-}
 
-function getColor(colorObj, type) {
+}
+function editColor(ctx) {
+    let serialObject = serialize(ctx);
+    serialObject['type'] = APIRequest.EDIT;
+    let response = APICall(serialObject);
+}
+function deleteColor(ctx) {
+    let serialObject = serialize(ctx);
+    serialObject['type'] = APIRequest.DELETE;
+    let response = APICall(serialObject);
+}
+// [{"name":"colorname",
+// "color": "#000000"}]
+function getColor(colorObj) {
+    colorObj['type'] = APIRequest.GET_COLOR;
     let response = APICall(colorObj);
     return response;
 }
 
+function getTable() {
+    let requestObj = { 'type': APIRequest.GET_TABLE };
+    APICall(requestObj)
+        .then(function (response) {
+            localDB = response.data;
+            console.log(localDB);
+            selectPopHandler();
+        })
+        .catch(function (error) {
+            console.log("API call failed: ", error);
+        });
+}
+// function refreshClientColors(obj) {
+//     localDB.push(obj);
+// }
 // Takes a jquery seleciton and extracts keys and values.
 function serialize(obj) {
     let data = {};
@@ -69,27 +97,27 @@ function serialize(obj) {
     return data;
 }
 
-// Issue a REST API call and give back response
+// Issue a REST API call and give back promise 
 function APICall(data) {
-    let response;
-    var jsonString= JSON.stringify(data);
-    console.log()
-    $.ajax({
-        type: "POST",
-        url: 'database.php',
-        data: jsonString,
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function (retData) {
-            console.log("success");
-            console.log(retData);
-            response = retData;
-        },
-        error: function (xhr, status, err) {
-            console.log("fail");
-            console.log(err);
-        },
+    return new Promise(function (resolve, reject) {
+        var jsonString = JSON.stringify(data);
+        var jsonString = JSON.stringify(data);
+        $.ajax({
+            type: "POST",
+            url: 'database.php',
+            data: jsonString,
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (retData) {
+                // console.log("success");
+                // console.log(retData);
+                resolve(retData);
+            },
+            error: function (xhr, status, err) {
+                // console.log("fail");
+                // console.log(err);
+                reject(err);
+            },
+        });
     });
-    return response;
 }
-
