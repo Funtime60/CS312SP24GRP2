@@ -72,6 +72,17 @@ function selectPopHandler() {
     });
 }
 
+
+function deleteSelector(deleteColor) {
+    let colorObj = deleteColor;
+    console.log(colorObj);
+    let found = localDB.filter(
+        o => o[CObjKeys.name].toLowerCase() !== colorObj[CObjKeys.name].toLowerCase()
+    );
+    console.log(localDB);
+    selectPopHandler();
+
+}
 function editSelector(updatedColor) {
     // if (Object.keys(updatedColor).length != 2) {
     //     return;
@@ -154,15 +165,14 @@ function deleteColor(ctx) {
         return;
     }
     let oldObj = [];
-    oldObj[CObjKeys.name] = serialObject['edtName'];
-    oldObj[CObjKeys.color] = serialObject['edtColor'];
+    oldObj[CObjKeys.name] = serialObject['delName'];
     serialObject['type'] = APIRequest.DELETE;
     APICall(serialObject)
         .then(function (response) {
             if (response.status === "error") {
                 setError(response.message);
             } else {
-                editSelector(oldObj);
+                deleteSelector(oldObj);
             }
         })
         .catch(function (error) {
