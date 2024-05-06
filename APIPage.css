@@ -1,73 +1,208 @@
-:root {
-
-}
-
-table {
-	margin: auto;
-}
-
+@import url("colorPalette.css");
 
 :root {
-	--ContentWidth: 80vw;
-    --Table1Width: var(--ContentWidth);
-    --Table1Ratio: 20%;
-    --Table2Size: calc(var(--ContentWidth) / 27);
+	--ContentWidth: 40rem;
+	--TextWidth: 20rem;
+	--ColorWidth: 5rem;
 }
-td, input[type="submit"], input[type="number"] {
-	background-color: var(--light_orange);
+
+input[type="submit"] {
+	margin: 0 auto;
+	display: block;
 }
-th {
-	background-color: var(--dark_orange);
-}
-.table1CellL {
-    width: var(--Table1Ratio);
-}
-.table1CellR {
-    width: calc(100% - --Table1Ratio);
-}
-#table1 {
-    width: var(--Table1Width);
-	margin: auto;
-}
-#table1 Select {
+
+Select {
+	min-width: 3rem;
+	width: 100%;
     border: none;
     background-color: inherit;
-	min-width: 100%;
 }
-table td, table th, input[type="submit"], input[type="number"] {
-    border: black 1px solid;
-}
-#table2 td, #table2 th {
-    /* Just set them all, some of them affect overflow. Didn't bother to check which */
-    min-height: var(--Table2Size);
-    min-width:  var(--Table2Size);
-    height: var(--Table2Size);
-    width:  var(--Table2Size);
-    max-height: var(--Table2Size);
-    max-width:  var(--Table2Size);
-}
-table {
-	border-collapse: collapse;
-}
-#table2 {
-    text-align: center;
-	margin: auto;
-}
-.tableSpacer {
-	height: 1rem;
-}
+
 form {
 	text-align: center;
 }
-select:disabled {
-	/* for Firefox */
-	-moz-appearance: none;
-	/* for Chrome */
-	-webkit-appearance: none;
-	color: black;
+
+table {
+    border-collapse: collapse;
+	max-width: var(--ContentWidth);
+	margin: auto;
 }
-label, input[type="number"] {
-    margin: 0.25em 0;
+
+th {
+    background-color: var(--dark_orange);
+}
+
+th h3 {
+	margin-block: 0.5em;
+}
+
+td, input[type="submit"], input[type="text"], input[type="color"] {
+    background-color: var(--light_orange);
+}
+
+td, th {
+    border: black 1px solid;
+	padding: 0;
+}
+
+input[type="submit"], input[type="text"], input[type="color"] {
+	border: none;
+	height: 1.5rem;
+}
+
+td:has(input[type="submit"]:hover), td:has(input[type="color"]:hover:not([disabled])), td:has(input[type="text"]:hover:not(:focus)) {
+	filter: brightness(0.75);
+}
+
+input[type="text"] {
+	font-family: monospace;
+	--MarginRight: 6px;
+	--MarginLeft: 2px;
+	width: calc(100% - var(--MarginRight) - var(--MarginLeft));
+	min-width: calc(var(--TextWidth) - var(--MarginRight) - var(--MarginLeft));
+	margin-right: var(--MarginRight);
+	margin-left: var(--MarginLeft);
+}
+
+input[type="color"] {
+	min-width: 4.5rem;
+	width: 100%;
+}
+
+.ErrorRow > td {
+    font-family: monospace;
+	text-align: center;
+	overflow: auto;
+	background-color: #FF5555;
+	padding: 0.25em;
+	position: relative;
+	border: none;
+	border-radius: 0.5rem;
+}
+
+.ErrorRow {
+	position: relative;
+	border: none;
+	top: -1.5em;
+	z-index: -1;
+	transition: top 0.5s;
+}
+
+.ErrorRow[err] {
+	top: 0.5rem;
 }
 
 
+
+
+
+
+/* Old Error Msg Stuff */
+/*
+#ANErr {
+	right: 2px;
+	top: -14px;
+}
+
+#ANErr[err] {
+	right: calc(1rem + 2px);
+	top: 0px;
+}
+
+#ASErr {
+	right: 4px;
+	top: -21px;
+}
+
+#ASErr[err] {
+	right: calc(1rem + 4px);
+	top: -3px;
+}
+
+#ENErr {
+	right: 2px;
+	top: -18px;
+}
+
+#ENErr[err] {
+	right: calc(1rem + 2px);
+	top: 0px;
+}
+
+#ESErr {
+	right: 4px;
+	top: -21px;
+}
+
+#ESErr[err] {
+	right: calc(1rem + 4px);
+	top: -2px;
+}
+
+#DNErr {
+	right: 2px;
+	top: -18px;
+}
+
+#DNErr[err] {
+	right: calc(1rem + 2px);
+	top: 0px;
+}
+
+#DSErr {
+	right: 4px;
+	top: -21px;
+}
+
+#DSErr[err] {
+	right: calc(1rem + 4px);
+	top: -2px;
+}
+
+.ErrorIcon {
+	background-color: OrangeRed;
+	border-radius: 0 0 0 0.5rem;
+	position: relative;
+	margin: 0 auto;
+	height: 0;
+	width: 0;
+	transition: width 0.5s, right 0.5s, top 0.5s, height 0.5s;
+}
+
+.ErrorMesg {
+	background-color: OrangeRed;
+	border-radius: 0 0 0 0.5rem;
+	position: relative;
+	margin: 0 auto;
+	height: 0;
+	width: fit-content;
+	overflow: hidden;
+	transition: height 0.5s;
+}
+
+.ErrorIcon[err] {
+	width: 1rem;
+	height: 100%;
+}
+
+.ErrorContainer {
+	width: 0;
+	height: 16px;
+}
+
+.ErrorIcon[err]:hover + .ErrorMesg {
+	height: 1em;
+}
+
+td:has(input[type="Color"]):has(.ErrorIcon) {
+	width: var(--ColorWidth);
+}
+
+td:has(input[type="text"]):has(.ErrorIcon) {
+	width: var(--TextWidth);
+}
+
+td:has(.ErrorIcon) > * {
+	display: inline-block;
+}
+*/
