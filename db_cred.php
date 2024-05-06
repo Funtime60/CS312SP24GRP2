@@ -9,6 +9,6 @@
 //
 //
 $servername = "faure";  // Dont touch!
-$username = "php_user"; 
+$username = "php_user";
 $database = "milestone";    // Should be same as your username
 $password = "supersecret";

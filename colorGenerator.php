@@ -25,11 +25,7 @@
 			$asColorList = array("red", "brown", "orange", "yellow", "green", "teal", "blue", "purple", "gray", "black");
 		?>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-		<?php
-			if(!isset($_POST["printMode"])) {
-				echo "<script src=\"colorGenerator.js\"></script>\n";
-			}
-		?>
+		<script src="colorGenerator.js"></script>
 		<script src="validation.js"></script>
 		<style>
 			<?php
@@ -63,6 +59,11 @@
 				}
 			}
 			/**/
+		</style>
+		<style>
+			select#table1Row0Select::after {
+				content: var(--light_orange);
+			}
 		</style>
 		<style id="tableSiz">
 			:root {
@@ -177,7 +178,7 @@
 								echo "\n\t\t\t\t\t\t<tr id=\"table2Row" . $iI . "\" class=\"table2Row\">";
 								echo "\n\t\t\t\t\t\t\t<th id=\"table2Row" . $iI . "ColH\" class=\"table2Header\">" . ($iI + 1) . "</th>";
 								for($iJ = 0; $iJ < $iRowColumn; $iJ++) {
-									echo "\n\t\t\t\t\t\t\t<td id=\"table2Row" . $iI . "Col" . $iJ . "\" class=\"table2Cell\"></td>";
+									echo "\n\t\t\t\t\t\t\t<td id=\"table2Row" . $iI . "Col" . $iJ . "\" class=\"" . (isset($_POST["printMode"]) ? "" : "table2Cell") . "\"></td>";
 								}
 								echo "\n\t\t\t\t\t\t</tr>";
 							}

@@ -10,6 +10,7 @@
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="colorGenerator.php">Color Generator</a></li>
+				<li><a href="APIPage.php">Color Database</a></li>
             </ul>
         </div>
     </nav>
