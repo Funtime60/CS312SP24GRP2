@@ -66,6 +66,7 @@ function initializeColorInput() {
     // $("#addSelector").val(localDB[0].color);
     $("#delSelector").val(found[CObjKeys.color]);
 }
+
 function selectPopHandler() {
     const selects = $("select");
     selects.empty();
