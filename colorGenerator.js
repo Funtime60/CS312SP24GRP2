@@ -49,7 +49,7 @@ function colorListHandler() {
 	const otptList = slctList.map((x) => x.parentElement.nextElementSibling.firstElementChild);
 	const indxList = slctList.map((x) => x.nextElementSibling.value);
 	const cellList = indxList.map((x) => $("#table2 td.table2Cell."+x).toArray());
-	otptList.forEach((x, i, a) => $("#"+x.id).attr("value", cellList[i].map((y, j) => y.id.substring(9).split("Col").map((z, k) => (k == 0)? parseInt(z) : String.fromCharCode(65 + parseInt(z))).reverse().join("")).toSorted().join(", ")));
+	otptList.forEach((x, i, a) => $("#"+x.id).attr("value", cellList[i].map((y, j) => y.id.substring(9).split("Col").map((z, k) => (k == 0)? parseInt(z) + 1 : String.fromCharCode(65 + parseInt(z))).reverse().join("")).toSorted().join(", ")));
 };
 
 $(document).ready(function() {
