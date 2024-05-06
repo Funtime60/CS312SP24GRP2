@@ -60,11 +60,8 @@ function arrayFindKeyValue(arr, key, val) {
     )
 }
 function initializeColorInput() {
-    let val = $("#edtList").val();
-    let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
-    $("#edtSelector").val(found[CObjKeys.color]);
-    // $("#addSelector").val(localDB[0].color);
-    $("#delSelector").val(found[CObjKeys.color]);
+    $("#edtSelector").val(arrayFindKeyValue(localDB, CObjKeys.name, $("#edtList").val())[CObjKeys.color]);
+    $("#delSelector").val(arrayFindKeyValue(localDB, CObjKeys.name, $("#delList").val())[CObjKeys.color]);
 }
 
 function selectPopHandler() {
@@ -102,7 +99,7 @@ function deleteSelector(deleteColor) {
     console.log(localDB);
     localDB=found;
     selectPopHandler();
-
+    initializeColorInput();
 }
 function editSelector(updatedColor) {
     let colorObj = updatedColor;
@@ -113,7 +110,7 @@ function editSelector(updatedColor) {
     }
     console.log(localDB);
     selectPopHandler();
-
+    initializeColorInput();
 }
 // Array.slice(inclusive_start, exclusive_end);
 function addColor(ctx) {
