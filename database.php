@@ -151,6 +151,9 @@ function maincode(): array {
                 $name = $dump['addName'];
                 $color = $dump['addColor'];
                 $result = $mysqli->query(q_insertValues($name, $color));
+                if(!$result){
+                    throw new Exception("Duplicate value!");
+                }
                 $response['message'] = 'Data added successfully';
                 // echo q_insertValues( $name, $color );
                 break;
