@@ -1,5 +1,5 @@
 <?php
-phpinfo();
+// phpinfo();
 include ("db_cred.php");
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
     $servername = "localhost";
