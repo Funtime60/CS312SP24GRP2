@@ -60,7 +60,7 @@ function populateEditText(text){
 function initializeColorInput() {
     $("#edtSelector").val(arrayFindKeyValue(localDB, CObjKeys.name, $("#edtList").val())[CObjKeys.color]);
     $("#delSelector").val(arrayFindKeyValue(localDB, CObjKeys.name, $("#delList").val())[CObjKeys.color]);
-    populateEditText($("edtList").val());
+    populateEditText(arrayFindKeyValue(localDB, CObjKeys.name, $("#edtList").val())[CObjKeys.name]);
 }
 
 function selectPopHandler() {
