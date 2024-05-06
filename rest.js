@@ -31,9 +31,6 @@ $(document).ready(function () {
     });
     $("#edtList").on("input", function (event) {
         let val = $(this).val();
-        // let found = localDB.find(
-        //     o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
-        // );
         let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
         if (found) {
             $("#edtSelector").val(found[CObjKeys.color]);
@@ -46,9 +43,6 @@ $(document).ready(function () {
     });
     $("#delList").on("input", function (event) {
         let val = $(this).val();
-        // let found = localDB.find(
-        //     o => o[CObjKeys.name].toLowerCase() === val.toLowerCase()
-        // );
         let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
         if (found) {
             $("#delSelector").val(found[CObjKeys.color]);
