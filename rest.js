@@ -67,7 +67,7 @@ function selectPopHandler() {
     const selects = $("select");
     selects.empty();
     const nameArr = localDB.map((x) => x.name);
-    console.log(nameArr);
+    // console.log(nameArr);
     selects.each(function (k, v) {
         const select = $("#" + v.id);
         let options = select[0].options;
@@ -198,7 +198,7 @@ function deleteColor(ctx) {
 }
 
 function setError(strError) {
-    $(".ErrorRow > td").text(strError);
+    console.log($(".ErrorRow > td").text(strError).attr("err", ((strError == "") ? "" : "err")));
 }
 
 function clearError() {
