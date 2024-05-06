@@ -38,6 +38,7 @@ $(document).ready(function () {
         if (found) {
             $("#edtSelector").val(found[CObjKeys.color]);
         }
+        populateEditText(val);
     });
     $("#delColorForm").on("submit", function (event) {
         event.preventDefault();
@@ -59,8 +60,12 @@ function arrayFindKeyValue(arr, key, val) {
         o => o[key].toLowerCase() === val.toLowerCase()
     )
 }
+function populateEditText(text){
+        $("#edtName").val(text);
+}
 function initializeColorInput() {
     let val = $("#edtList").val();
+    populateEditText(val);
     let found = arrayFindKeyValue(localDB, CObjKeys.name, val);
     $("#edtSelector").val(found[CObjKeys.color]);
     // $("#addSelector").val(localDB[0].color);

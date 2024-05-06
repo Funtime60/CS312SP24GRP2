@@ -1,8 +1,9 @@
 <?php
-// phpinfo();
+phpinfo();
 include ("db_cred.php");
-
-// $servername = "localhost";  
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    $servername = "localhost";
+}
 $table = "colors";
 
 // https://www.php.net/manual/en/mysqlinfo.api.choosing.php
@@ -11,7 +12,7 @@ $table = "colors";
 // Both apis seem very similar. Ill go with mysqli.
 
 // Pull json from php's input buffer
-function decodeJSON(){
+function decodeJSON() {
     // return $_GET;
     return json_decode(file_get_contents('php://input'), true);
     // return json_decode(var_dump($_POST));
