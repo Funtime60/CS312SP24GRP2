@@ -88,7 +88,7 @@ input[type="color"] {
 	transition: top 0.5s;
 }
 
-.ErrorRow:has(td:not([err=""])) {
+.ErrorRow:has(td[err="err"]) {
 	top: 1.5rem;
 }
 
